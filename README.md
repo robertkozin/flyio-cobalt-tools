@@ -1,17 +1,25 @@
 # flyio-cobalt-tools
  Hosting the https://cobalt.tools project on https://fly.io
 
-## Secrets
-I wanted to use https://github.com/getsops/sops but cobalt's secret value is stored as a [key in a json map](https://github.com/imputnet/cobalt/blob/main/docs/run-an-instance.md#api-key-file-format).
+ For secret management I wanted to use [SOPS](https://github.com/getsops/sops) but Cobalt's secret value is stored as a [key in a json map](https://github.com/imputnet/cobalt/blob/main/docs/run-an-instance.md#api-key-file-format) and SOPS only encrypts values.
 
-### Encrypt
-`age --encrypt --armour -R recipients.txt -o keys.json.age keys.json`
+## Tasks
+### Deploy
+```shell
+fly deploy --ha=false
+```
 
-### Decrypt
-`age --decrypt -i ~/.age/key.txt -o keys.json keys.json.age`
+### Decrypt secrets
+```shell
+age --decrypt -i ~/.age/keys.txt -o keys.json keys.json.age
+```
 
-### Encode and copy to clipboard
-`base64 keys.json | pbcopy`
+### Encrypt secrets
+```shell
+age --encrypt --armour -R recipients.txt -o keys.json.age keys.json
+```
 
-### Encode and set in flyctl
-`fly secrets set KEYS=$(base64 keys.json)`
+### Deploy secrets
+```shell
+fly secrets set KEYS=$(base64 keys.json)
+```
