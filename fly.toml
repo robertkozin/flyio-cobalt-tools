@@ -1,0 +1,42 @@
+# fly.toml app configuration file generated for flyio-cobalt-tools on 2024-12-16T21:35:11-05:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'flyio-cobalt-tools'
+primary_region = 'yul'
+
+[build]
+  image = "ghcr.io/imputnet/cobalt:latest"
+
+[deploy]
+  strategy = "bluegreen"
+
+[env]
+  API_URL = "https://flyio-cobalt-tools.fly.dev"
+  DURATION_LIMIT = "180"
+  TUNNEL_LIFESPAN = "30"
+  API_KEY_URL = "file:///keys.json"
+  API_AUTH_REQUIRED = "1"
+
+[http_service]
+  internal_port = 9000
+  force_https = true
+  auto_stop_machines = 'suspend'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[http_service.checks]]
+  grace_period = "10s"
+  interval = "30s"
+  method = "GET"
+  timeout = "5s"
+  path = "/"
+
+[[files]]
+  guest_path = "/keys.json"
+  secret_name = "KEYS"
+
+[[vm]]
+  size = "shared-cpu-4x"
