@@ -21,5 +21,5 @@ age --encrypt --armour -R recipients.txt -o keys.json.age keys.json
 
 ### Deploy secrets
 ```shell
-fly secrets set KEYS=$(base64 keys.json)
+fly secrets set KEYS=$(base64 -i keys.json)
 ```
