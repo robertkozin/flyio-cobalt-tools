@@ -14,8 +14,6 @@ primary_region = 'yyz'
 
 [env]
   API_URL = "https://flyio-cobalt-tools.fly.dev"
-  DURATION_LIMIT = "180"
-  TUNNEL_LIFESPAN = "30"
   API_KEY_URL = "file:///keys.json"
   API_AUTH_REQUIRED = "1"
 
