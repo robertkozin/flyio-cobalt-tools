@@ -37,4 +37,5 @@ primary_region = 'yyz'
   secret_name = "KEYS"
 
 [[vm]]
-  size = "shared-cpu-4x"
+  size = "shared-cpu-2x"
+  memory = "4gb"
